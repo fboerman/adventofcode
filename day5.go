@@ -8,7 +8,7 @@ import (
 	"strings"
 )
 
-func load_program() (input []int) {
+func load_program(fname string) (input []int) {
 	// taken from bufio/example_test.go for splitting at comma
 	onComma := func(data []byte, atEOF bool) (advance int, token []byte, err error) {
 		for i := 0; i < len(data); i++ {
@@ -26,7 +26,7 @@ func load_program() (input []int) {
 	}
 
 	// read and parse the file by comma splitting
-	file, _ := os.Open("day5_input.txt")
+	file, _ := os.Open(fname)
 	defer file.Close()
 
 	scanner := bufio.NewScanner(file)
@@ -56,7 +56,7 @@ func get_val_p(num *int, mode byte, mem *[]int) *int {
 func main() {
 	//// part 1
 	//load the program code
-	mem := load_program()
+	mem := load_program("day5_input.txt")
 
 	// iterate through the instructions and execute
 	// format c = a $(op) b
@@ -73,20 +73,50 @@ func main() {
 		//slice the last two, this is the opcode
 		opcode, _ := strconv.Atoi(instr_str[3:])
 		fmt.Println("[>] opcode: ", opcode)
+		//calculate all pointers for parameters $a $b $c, nil if non applicable
+		var a *int = nil
+		var b *int = nil
+		var c *int = nil
+		switch opcode {
+		case 1:
+			fallthrough
+		case 2:
+			fallthrough
+		case 7:
+			fallthrough
+		case 8:
+			// all three parameters
+			a = get_val_p(&mem[pc+1], instr_str[2], &mem)
+			b = get_val_p(&mem[pc+2], instr_str[1], &mem)
+			c = get_val_p(&mem[pc+3], instr_str[0], &mem)
+		case 3:
+			fallthrough
+		case 4:
+			// only one parameters
+			a = get_val_p(&mem[pc+1], instr_str[2], &mem)
+		case 5:
+			fallthrough
+		case 6:
+			// two parameters
+			a = get_val_p(&mem[pc+1], instr_str[2], &mem)
+			b = get_val_p(&mem[pc+2], instr_str[1], &mem)
+		}
+
+		//execute the instruction with regard to opcode
 		switch opcode {
 		case 1:
 			// addition
-			fmt.Println("[>] full instruction: ", mem[pc:pc+4])
-			*get_val_p(&mem[pc+3], instr_str[0], &mem) = *get_val_p(&mem[pc+1], instr_str[2], &mem) + *get_val_p(&mem[pc+2], instr_str[1], &mem)
+			fmt.Println("[>] full instruction: ", mem[pc], *a, *b, mem[pc+3])
+			*c = *a + *b
 			pc += 4
 		case 2:
 			// multiply
-			fmt.Println("[>] full instruction: ", mem[pc:pc+4])
-			*get_val_p(&mem[pc+3], instr_str[0], &mem) = *get_val_p(&mem[pc+1], instr_str[2], &mem) * *get_val_p(&mem[pc+2], instr_str[1], &mem)
+			fmt.Println("[>] full instruction: ", mem[pc], *a, *b, mem[pc+3])
+			*c = *a * *b
 			pc += 4
 		case 3:
 			//input
-			fmt.Println("[>] full instruction: ", mem[pc:pc+2])
+			fmt.Println("[>] full instruction: ", mem[pc], mem[pc+1])
 			fmt.Println("Please provide input: ")
 			var input string
 			_, err := fmt.Scanln(&input)
@@ -94,13 +124,47 @@ func main() {
 				fmt.Println(os.Stderr, err)
 				return
 			}
-
 			mem[mem[pc+1]], _ = strconv.Atoi(input)
 			pc += 2
 		case 4:
-			fmt.Println("[>] full instruction: ", mem[pc:pc+2])
-			fmt.Println("[*] print: ", *get_val_p(&mem[pc+1], instr_str[2], &mem))
+			//output
+			fmt.Println("[>] full instruction: ", mem[pc], *a)
+			fmt.Println("[*] print: ", *a)
 			pc += 2
+		case 5:
+			// jump-if-true
+			fmt.Println("[>] full instruction: ", mem[pc], *a, *b)
+			if *a != 0 {
+				pc = *b
+			} else {
+				pc += 3
+			}
+		case 6:
+			// jump-if-false
+			fmt.Println("[>] full instruction: ", mem[pc], *a, *b)
+			if *a == 0 {
+				pc = *b
+			} else {
+				pc += 3
+			}
+		case 7:
+			// less than
+			fmt.Println("[>] full instruction: ", mem[pc], *a, *b, mem[pc+3])
+			if *a < *b {
+				*c = 1
+			} else {
+				*c = 0
+			}
+			pc += 4
+		case 8:
+			// equals
+			fmt.Println("[>] full instruction: ", mem[pc], *a, *b, mem[pc+3])
+			if *a == *b {
+				*c = 1
+			} else {
+				*c = 0
+			}
+			pc += 4
 		case 99:
 			// halt
 			//fmt.Println(mem[0])
