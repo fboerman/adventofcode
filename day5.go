@@ -33,7 +33,9 @@ func load_program(fname string) (input []int) {
 	scanner.Split(onComma)
 
 	for scanner.Scan() {
-		inp, _ := strconv.Atoi(scanner.Text())
+		c := scanner.Text()
+		c = strings.TrimSuffix(c, "\n")
+		inp, _ := strconv.Atoi(c)
 		input = append(input, inp)
 	}
 
