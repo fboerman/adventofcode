@@ -211,6 +211,38 @@ func RunAmplifiers(settings []int, program string, c chan Result){
 	c <- r
 }
 
+// feedback loop version
+// run the program with the settings and in feedback loop
+func RunAmplifiers_withfeedback(settings []int, program string, c chan Result){
+	//load five copies of the program
+	var mems [][]int
+	for i := 0; i<5;i++ {
+		mems = append(mems, load_program("day7_input.txt"))
+	}
+	var pcs [5]int
+	var states [5]bool
+	signal := 0
+	for i := 0; i<5;i++ {
+		//first iteration, provide setting
+		var out []int
+		out, states[i], pcs[i] = IntcodeMachine(&mems[i], []int{settings[i], signal}, pcs[i])
+		signal = out [0]
+	}
+	//all further iterations, stop when last amplifier has halted
+	for !states[4] {
+		for i := 0; i<5;i++ {
+			//first iteration, provide setting
+			var out []int
+			out, states[i], pcs[i] = IntcodeMachine(&mems[i], []int{signal}, pcs[i])
+			signal = out [0]
+		}
+	}
+
+	r := Result{settings, signal}
+	c <- r
+}
+
+
 // from: https://www.golangprograms.com/golang-program-to-generate-slice-permutations-of-number-entered-by-user.html
 func rangeSlice(start, stop int) []int {
 	if start > stop {
@@ -244,6 +276,8 @@ func permutation(xs []int) (permuts [][]int) {
 var wg sync.WaitGroup
 
 func main() {
+	//fmt.Println(RunAmplifiers([]int{1,0,4,3,2}, "day7_test.txt"))
+
 	//create all possible inputs and start a goroutine for each one
 	c := make(chan Result)
 	all_possible_settings := permutation(rangeSlice(0,5))
@@ -263,6 +297,29 @@ func main() {
 		}
 	}
 	fmt.Println("part 1:")
+	fmt.Println("highest signal is ", highest_candidate.output_signal, " with setting ", highest_candidate.settings)
+
+
+	//create all possible inputs and start a goroutine for each one
+	c = make(chan Result)
+	all_possible_settings = permutation(rangeSlice(5,10))
+	for _, setting := range all_possible_settings {
+		go RunAmplifiers_withfeedback(setting, "day7_input.txt", c)
+	}
+
+	// wait for all goroutines to finish
+	wg.Wait()
+
+
+	// retrieve all results and check which one has higest output
+	highest_candidate = Result{[]int{}, 0}
+	for i:=0; i<len(all_possible_settings); i++ {
+		candidate := <- c
+		if candidate.output_signal > highest_candidate.output_signal {
+			highest_candidate = candidate
+		}
+	}
+
 	fmt.Println("highest signal is ", highest_candidate.output_signal, " with setting ", highest_candidate.settings)
 
 }
