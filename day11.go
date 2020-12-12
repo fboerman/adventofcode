@@ -52,8 +52,11 @@ func seat_in_direction(x_ int, y_ int, room *[]byte, width int, heigth int, dir 
 		if p == nil {
 			break
 		}
-		if *p == '#' {
+		switch *p {
+		case '#':
 			return true
+		case 'L':
+			return false
 		}
 	}
 
