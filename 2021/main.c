@@ -1,11 +1,11 @@
 #include <stdio.h>
-#include "2020practice.h"
+#include "2021.h"
 
 int main() {
     char choice;
 
     printf("Advent of code 2021 Frank Boerman (c)\n");
-    printf("2020 practice mode\n");
+
     printf("Choose day: ");
     scanf("%c", &choice);
 

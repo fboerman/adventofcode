@@ -57,4 +57,13 @@ int* convert_array_to_int(char **arr, size_t s) {
     return result;
 }
 
+int sum(int arr[], size_t l) {
+    int s=0;
+
+    for(int i=0;i<l;i++) {
+        s += arr[i];
+    }
+    return s;
+}
+
 #pragma clang diagnostic pop

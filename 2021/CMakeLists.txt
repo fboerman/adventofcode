@@ -3,4 +3,4 @@ project(2021 C)
 
 set(CMAKE_C_STANDARD 99)
 
-add_executable(2021 main.c 2020practice.c 2020practice.h utils.c utils.h)
+add_executable(2021 main.c utils.c utils.h 2021.c 2021.h)
