@@ -3,7 +3,6 @@
 void day2() {
     printf("Day 2\n");
     size_t num_lines;
-    int num_increases=0;
 
     char** file = load_file_whole("day2.txt", &num_lines);
     if(file == NULL){
