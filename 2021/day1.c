@@ -1,4 +1,4 @@
-#include "2021.h"
+#include "day1.h"
 
 void day1() {
     printf("Day 1\n");

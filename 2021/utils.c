@@ -33,7 +33,7 @@ char **load_file_whole(char fname[], size_t* num_lines) {
         return NULL;
     }
 
-    fp = fopen("day1.txt", "r");
+    fp = fopen(fname, "r");
 
     for(int i = 0; i<*num_lines; i++){
         getline(&line, &len, fp);

@@ -1,5 +1,6 @@
 #include <stdio.h>
-#include "2021.h"
+#include "day1.h"
+#include "day2.h"
 
 int main() {
     char choice;
@@ -12,6 +13,9 @@ int main() {
     switch(choice) {
         case '1':
             day1();
+            break;
+        case '2':
+            day2();
             break;
         default:
             printf("Invalid choice!\n");
