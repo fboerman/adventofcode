@@ -2,6 +2,7 @@
 #include "day1.h"
 #include "day2.h"
 #include "day3.h"
+#include "day5.h"
 
 int main() {
     char choice;
@@ -20,6 +21,9 @@ int main() {
         break;
         case '3':
             day3();
+            break;
+        case '5':
+            day5();
             break;
         default:
             printf("Invalid choice!\n");

@@ -7,7 +7,6 @@ void day2() {
     char** file = load_file_whole("day2.txt", &num_lines);
     if(file == NULL){
         return;
-
     }
     printf("Number of lines in input: %zu\n", num_lines);
     int horizontal = 0, depth = 0, depth_2 = 0;
