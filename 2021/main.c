@@ -10,7 +10,7 @@ int main() {
     printf("Advent of code 2021 Frank Boerman (c)\n");
 
     printf("Choose day: ");
-    scanf("%c", &choice);
+    scanf("%c", &choice); getchar();
 
     switch(choice) {
         case '1':

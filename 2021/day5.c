@@ -25,6 +25,10 @@ int max(int a , int b) {
     return a > b ? a : b;
 }
 
+int min(int a , int b) {
+    return a < b ? a : b;
+}
+
 bool point_on_line(Line* l, const int P[2]) {
     // implementation of https://stackoverflow.com/a/17693189/14790078
 
@@ -37,17 +41,20 @@ bool point_on_line(Line* l, const int P[2]) {
         }
     }
 
-    return (P[0] >= l->P1[0] &&
-           P[0] <= l->P2[0] &&
-           P[1] >= l->P1[1] &&
-           P[1] <= l->P2[1])
+    int x1 = min(l->P1[0], l->P2[0]);
+    int x2 = max(l->P1[0], l->P2[0]);
+    int y1 = min(l->P1[1], l->P2[1]);
+    int y2 = max(l->P1[1], l->P2[1]);
+
+    return (P[0] >= x1 &&
+           P[0] <= x2 &&
+           P[1] >= y1 &&
+           P[1] <= y2)
            ||
-            (P[0] <= l->P1[0] &&
-            P[0] >= l->P2[0] &&
-            P[1] <= l->P1[1] &&
-            P[1] >= l->P2[1]);
-//    return (l->P1[0] < P[0] < l->P2[0] && l->P1[1] < P[1] < l->P2[1]) ||
-//            (l->P1[0] > P[0] > l->P2[0] && l->P1[1] > P[1] > l->P2[1]);
+            (P[0] <= x1 &&
+            P[0] >= x2 &&
+            P[1] <= y1 &&
+            P[1] >= y2);
 }
 
 void day5() {
@@ -84,7 +91,13 @@ void day5() {
     }
     printf("Board is %i by %i\n", maxx, maxy);
 
-    printf("part 1\n");
+    char choice;
+    printf("Part 1 or 2 ");
+    scanf("%c", &choice);
+    if(choice != '1' && choice != '2') {
+        printf("Invalid choice\n");
+        return;
+    }
 
     int crossing_points = 0;
 
@@ -94,13 +107,15 @@ void day5() {
             for(int n=0; n<num_lines; n++) {
                 int p[2] = {x, y};
                 //for part 1 only consider straight lines
-                if(!(lines[n].P1[0] == lines[n].P2[0] || lines[n].P1[1] == lines[n].P2[1])) {
-                    continue;
+                if(choice == '1') {
+                    if (!(lines[n].P1[0] == lines[n].P2[0] || lines[n].P1[1] == lines[n].P2[1])) {
+                        continue;
+                    }
                 }
                 if(point_on_line(&lines[n], p)) {
+                    //printf("%i %i\n", x, y);
                     if(flag){// we already found an earlier line through this point
                         crossing_points++;
-                        printf("%i %i\n", x, y);
                         break;
                     }
                     flag = true;
