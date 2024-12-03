@@ -1,3 +1,4 @@
 *.txt
 .idea
 cmake-build-debug
+puzzle_inputs
