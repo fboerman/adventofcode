@@ -2,3 +2,5 @@
 .idea
 cmake-build-debug
 puzzle_inputs
+aoc-cli
+puzzle.md

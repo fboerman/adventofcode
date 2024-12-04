@@ -8,3 +8,4 @@ def get_input(day, test):
 
 def test_day1():
     assert day1_part1(get_input(1, test=True)) == 11
+    assert day1_part2(get_input(1, test=True)) == 31
