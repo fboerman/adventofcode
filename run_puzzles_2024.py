@@ -8,3 +8,6 @@ if __name__ == '__main__':
 
     print(f'Day 2 part 1: {day2(get_input(2, test=False), 1)}')
     print(f'Day 2 part 2: {day2(get_input(2, test=False), 2)}')
+
+    print(f'Day 3 part 1: {day3_part1(get_input(3, test=False))}')
+    print(f'Day 3 part 2: {day3_part2(get_input(3, test=False))}')
