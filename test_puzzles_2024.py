@@ -19,3 +19,8 @@ def test_day2():
 def test_day3():
     assert day3_part1(get_input(3, test=True)) == 161
     assert day3_part2(get_input(3, test=True)) == 48
+
+
+def test_day4():
+    assert day4_part1(get_input(4, test=True)) == 18
+    assert day4_part2(get_input(4, test=True)) == 9

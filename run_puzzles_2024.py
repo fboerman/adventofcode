@@ -11,3 +11,6 @@ if __name__ == '__main__':
 
     print(f'Day 3 part 1: {day3_part1(get_input(3, test=False))}')
     print(f'Day 3 part 2: {day3_part2(get_input(3, test=False))}')
+
+    print(f'Day 4 part 1: {day4_part1(get_input(4, test=False))}')
+    print(f'Day 4 part 2: {day4_part2(get_input(4, test=False))}')
