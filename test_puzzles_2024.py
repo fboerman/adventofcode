@@ -43,3 +43,7 @@ def test_day8():
     assert day8(get_input(8, test=True), part2=False) == 14
     assert day8(get_input(8, test=True), part2=True) == 34
 
+
+def test_day9():
+    assert day9_part1(get_input(9, test=True)) == 1928
+    assert day9_part2(get_input(9, test=True)) == 2858
