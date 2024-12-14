@@ -26,4 +26,7 @@ if __name__ == '__main__':
     #print(f'Day 8 part 2: {day8(get_input(8, test=False), part2=True)}')
 
     #print(f'Day 9 part 1: {day9_part1(get_input(9, test=False))}')
-    print(f'Day 9 part 2: {day9_part2(get_input(9, test=False))}')
+    #print(f'Day 9 part 2: {day9_part2(get_input(9, test=False))}')
+
+    print(f'Day 10 part 1: {day10(get_input(10, test=False), part2=False)}')
+    print(f'Day 10 part 2: {day10(get_input(10, test=False), part2=True)}')
