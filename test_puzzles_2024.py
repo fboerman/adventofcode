@@ -52,3 +52,7 @@ def test_day10():
 
 def test_day11():
     assert day11(get_input(11, test=True), part2=False) == 55312
+
+
+def test_day13():
+    assert day13(get_input(13, test=True), part2=False) == 480
