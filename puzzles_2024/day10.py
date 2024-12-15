@@ -1,6 +1,7 @@
 import numpy as np
 from .aoc_utils import get_item
 
+
 def day10(data_input, part2=False):
     M = np.array([np.array(list(x)).astype(int) for x in data_input.split('\n') if x != ''])
     trailheads = []
