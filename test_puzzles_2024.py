@@ -1,9 +1,5 @@
 from puzzles_2024 import *
-
-
-def get_input(day, test):
-    with open(f'puzzle_inputs/day{day}_{"test" if test else "input"}.txt', 'r') as stream:
-        return stream.read()
+from puzzles_2024.aoc_utils import get_input
 
 
 def test_day1():

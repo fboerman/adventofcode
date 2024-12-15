@@ -1,5 +1,5 @@
 from puzzles_2024 import *
-from test_puzzles_2024 import get_input
+from puzzles_2024.aoc_utils import get_input
 
 
 if __name__ == '__main__':
